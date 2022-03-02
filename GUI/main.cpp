@@ -9,80 +9,55 @@ try
 
 	Point tl {50,50};
 
-	Simple_window win {tl, 600, 400, "My window"}; //12.7.1
+	Simple_window win {tl, 800, 1000, "Simple window"};
 	
-	Axis xa {Axis::x, Point{20,300}, 300, 10, "x axis"}; //12.7.2
-	
-	Axis ya {Axis::y, Point{20,300}, 280, 10, "y axis"}; //12.7.3
-	ya.set_color(Color::red);
-	ya.label.set_color(Color::yellow);
-	
-	Function sine {sin,0,100,Point{20,150},1000,50,50}; //12.7.4
-	sine.set_style(Line_style::dash);
-	sine.set_color(Color::green);
+	int x_size = 800;
+	int y_size = 800;
+	int x_grid = 100;
+	int y_grid = 100;
 
-	Polygon poly; // 12.7.5
-	poly.add(Point{300,200}); 
-	poly.add(Point{350,100});
-	poly.add(Point{400,200});
-	poly.set_color(Color::dark_red);
-	poly.set_style(Line_style::dot);
+	Lines grid;
+	for (int x=x_grid; x<x_size; x+=x_grid)
+		grid.add(Point{x,0},Point{x,y_size});
+	for (int y = y_grid; y<y_size; y+=y_grid)
+		grid.add(Point{0,y},Point{x_size,y});
+		
+	win.attach(grid);
+		
+	Vector_ref<Rectangle> vr;
+	
+	for (int i = 0; i<8; ++i)
+	{
+			vr.push_back(new Rectangle{Point{0,i*100},100,100});
+			vr[i].set_color(Color::red);
+			win.attach(vr[i]);
+	}
 
-	Rectangle r {Point{200,180}, 150, 75}; //12.7.6
-	Closed_polyline poly_rect;
-	poly_rect.add(Point{100,50});
-	poly_rect.add(Point{200,50});
-	poly_rect.add(Point{200,100});
-	poly_rect.add(Point{100,100});
-	poly_rect.add(Point{150,75});
-	
-	r.set_fill_color(Color::magenta); // 12.7.7
-	poly.set_style(Line_style(Line_style::dash,4));
-	poly_rect.set_style(Line_style(Line_style::dashdotdot,2));
-	poly_rect.set_fill_color(Color::green);
-	
-	Text t {Point{50,150}, "Hello, graphical world!"}; //12.7.8
-	t.set_font(Font::helvetica_bold_italic);
-	t.set_font_size(20);
+	Image homer1 {Point{100,0}, "200by200homer.jpg"};
+	Image homer2 {Point{600,200}, "200by200homer.jpg"};
+	Image homer3 {Point{300,400}, "200by200homer.jpg"};
 
-	//Image ii {Point{100,50}, "badge.jpg"}; // 12.7.9
-	Image ap {Point{100,50}, "apple.jpeg"};
-	//ii.move(100,200);
-	
-	Circle c {Point{100,200},35}; //12.7.10
-	c.set_fill_color(Color::red);
+	win.attach(homer1);
+	win.attach(homer2);
+	win.attach(homer3);
 
-	Ellipse e {Point{400,200}, 75,25};
-	e.set_color(Color::dark_red);
+	Image homerNew {Point{0, 0}, "200by200homer.jpg"};
+	homerNew.set_mask(Point{0, 0}, 100, 100);
 	
-	Mark m {Point{500,120},'x'};
-	m.set_color(Color::blue);
-	
-	ostringstream oss;
-	oss << "screen size: " << x_max() << "*" << y_max()
-	 << "; window size: " << win.x_max() << "*" << win.y_max();
-	Text sizes {Point{100,30},oss.str()};
-	
-	Image cal {Point{325,225},"snow_cpp.gif"};
-	cal.set_mask(Point{40,40},200,150);
+	//homerNew.move(100, 100);
 
-	win.attach(cal);
-	win.attach(sizes);
-	win.attach(c);
-	win.attach(m);
-	win.attach(e);	
-	win.attach(ap);
-	//win.attach(ii);
-	win.attach(t);
-	win.attach(poly_rect);
-	win.attach(r);
-	win.attach(poly);
-	win.attach(sine);
-	win.attach(ya);
-	win.attach(xa);
+	win.attach(homerNew);
+	
 	win.wait_for_button();
 
-	return 0;
+	/*for (int i = 0; i<8; ++i)
+		for (int j = 0; j<8; ++j)
+		{
+			homer_move.move(i*100, j*100);
+		
+			win.wait_for_button();
+		}
+	*/
 }
 
 catch(exception& e)
