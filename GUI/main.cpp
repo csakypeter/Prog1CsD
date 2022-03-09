@@ -2,72 +2,54 @@
 #include "Graph.h"
 #include <stdexcept>
 
+/*1. Define a class B1 with a virtual function vf() and a non-virtual function f() .
+Define both of these functions within class B1 . Implement each function
+to output its name (e.g., B1::vf() ). Make the functions public . Make a B1
+object and call each function.
+2. Derive a class D1 from B1 and override vf() . Make a D1 object and call vf()
+and f() for it.
+3. Define a reference to B1 (a B1& ) and initialize that to the D1 object you
+just defined. Call vf() and f() for that reference.
+4. Now define a function called f() for D1 and repeat 1–3. Explain the results.
+5. Add a pure virtual function called pvf() to B1 and try to repeat 1–4. Ex-
+plain the result.
+6. Define a class D2 derived from D1 and override pvf() in D2 . Make an
+object of class D2 and invoke f() , vf() , and pvf() for it.
+7. Define a class B2 with a pure virtual function pvf() . Define a class D21
+with a string data member and a member function that overrides pvf() ;
+D21::pvf() should output the value of the string . Define a class D22 that
+is just like D21 except that its data member is an int . Define a function f()
+that takes a B2& argument and calls pvf() for its argument. Call f() with a
+D21 and a D22 .*/
+
+class B1 {
+public: 
+	virtual void vf() const ( cout << "B1::vf()" << endl; );
+	void f() const ( cout << "B1::vf()" << endl; );
+};
+
+class D1 : public B1 {
+public:
+	virtual void vf() const ( cout << "D1::vf()" << endl; );
+	void f() const ( cout << "D1::vf()" << endl; );
+};
+};
+
 
 int main()
 try
-{
-	using namespace Graph_lib;
-
-	Point tl {50,50};
-
-	Simple_window win {tl, 800, 1000, "Chapter13"};
+{	
+	B1 test;
 	
-	int x_size = 800;
-	int y_size = 800;
-	int x_grid = 100;
-	int y_grid = 100;
-
-	Lines grid;
-	for (int x=x_grid; x<x_size; x+=x_grid)
-		grid.add(Point{x,0},Point{x,y_size});
-	for (int y = y_grid; y<y_size; y+=y_grid)
-		grid.add(Point{0,y},Point{x_size,y});
-		
-	win.attach(grid);
-		
-	Vector_ref<Rectangle> vr;
+	test.f();
 	
-	for (int i = 0; i<8; ++i)
-	{
-			vr.push_back(new Rectangle{Point{i*100,i*100},100,100});
-			vr[i].set_color(Color::red);
-			win.attach(vr[i]);
-	}
-
-	Image homer1 {Point{200,0}, "200by200homer.jpg"};
-	Image homer2 {Point{600,200}, "200by200homer.jpg"};
-	Image homer3 {Point{100,600}, "200by200homer.jpg"};
-
-	win.attach(homer1);
-	win.attach(homer2);
-	win.attach(homer3);
-
-	Image homerNew {Point{0, 0}, "200by200homer.jpg"};
-	homerNew.set_mask(Point{50, 20}, 100, 100);
-
-	win.attach(homerNew);
-	win.wait_for_button();
-
-	for (int i = 0; i<8; ++i)
-	{
-		for (int j = 0; j<7; ++j)
-		{
-			homerNew.move(0, 100);
-			win.attach(homerNew);
-			win.wait_for_button();
-			
-			if (j == 6 && i >= 1)
-			{
-				homerNew.move(0, 100);
-				win.attach(homerNew);
-				win.wait_for_button();
-			}
-		}
-		
-		homerNew.move(100, -800);
-		win.attach(homerNew);
-		win.wait_for_button();
-	}
+	test.vf();
+	
+	D1 testD;
+	
+	testD.f();
+	
+	testD.vf();
 }
 
 catch(exception& e)
@@ -81,14 +63,3 @@ catch(...)
 	cerr << "error\n";
 	return 2;
 }
-
-
-
-
-
-
-
-
-
-
-
