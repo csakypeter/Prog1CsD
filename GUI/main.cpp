@@ -22,6 +22,7 @@ is just like D21 except that its data member is an int . Define a function f()
 that takes a B2& argument and calls pvf() for its argument. Call f() with a
 D21 and a D22 .*/
 
+<<<<<<< HEAD
 class B1
 {
 public: 
@@ -104,6 +105,36 @@ try
 	
 	
 	return 0;
+=======
+class B1 {
+public: 
+	virtual void vf() const ( cout << "B1::vf()" << endl; );
+	void f() const ( cout << "B1::vf()" << endl; );
+};
+
+class D1 : public B1 {
+public:
+	virtual void vf() const ( cout << "D1::vf()" << endl; );
+	void f() const ( cout << "D1::vf()" << endl; );
+};
+};
+
+
+int main()
+try
+{	
+	B1 test;
+	
+	test.f();
+	
+	test.vf();
+	
+	D1 testD;
+	
+	testD.f();
+	
+	testD.vf();
+>>>>>>> e20287ccd6495dc8855b6407b2191995dfd82830
 }
 
 catch(exception& e)
@@ -117,14 +148,3 @@ catch(...)
 	cerr << "error\n";
 	return 2;
 }
-
-
-
-
-
-
-
-
-
-
-
