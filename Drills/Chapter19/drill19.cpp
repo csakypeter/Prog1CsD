@@ -33,7 +33,7 @@ struct S {
 
 	T& get();
 	const T& get() const;
-	
+
 private:
 	T val;
 };
